@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<!--http://localhost:59962/HtmlPage1.html?t=0&sa=SGVycg==&f=TWFyYw==&n=U3RpZWdlcg==&s=QmFhcmVyc3RyYXNzZSA5OQ==&z=NjMwMA==&c=WnVn&a=MTIzNC41MA==&cu=Q0hG&d=UmVjaG51bmcgZiZ1dW1sO3IgZWluZSBTY2hhY2h0ZWwgUHJhbGluZW4=&e=MjAxOS0wOC0wOA==-->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <title></title>
+    <script language="javascript">
+        function decode_base64(s) {
+            var e = {}, i, k, v = [], r = '', w = String.fromCharCode;
+            var n = [[65, 91], [97, 123], [48, 58], [43, 44], [47, 48]];
+
+            for (z in n) {
+                for (i = n[z][0]; i < n[z][1]; i++) {
+                    v.push(w(i));
+                }
+            }
+            for (i = 0; i < 64; i++) {
+                e[v[i]] = i;
+            }
+
+            for (i = 0; i < s.length; i += 72) {
+                var b = 0, c, x, l = 0, o = s.substring(i, i + 72);
+                for (x = 0; x < o.length; x++) {
+                    c = e[o.charAt(x)];
+                    b = (b << 6) + c;
+                    l += 6;
+                    while (l >= 8) {
+                        r += w((b >>> (l -= 8)) % 256);
+                    }
+                }
+            }
+            return r;
+        }
+
+        function parse_query_string(query) {
+            var vars = query.split("&");
+            var query_string = {};
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                var key = decodeURIComponent(pair[0]);
+                var value = decodeURIComponent(pair[1]);
+                // If first entry with this name
+                if (typeof query_string[key] === "undefined") {
+                    query_string[key] = decodeURIComponent(value);
+                    // If second entry with this name
+                } else if (typeof query_string[key] === "string") {
+                    var arr = [query_string[key], decodeURIComponent(value)];
+                    query_string[key] = arr;
+                    // If third or later entry with this name
+                } else {
+                    query_string[key].push(decodeURIComponent(value));
+                }
+            }
+            return query_string;
+        }
+
+        var query_string = window.location.search.substring(1);
+        var parsed_qs = parse_query_string(query_string);
+
+        if (parsed_qs.t == 1) {
+            alert(parsed_qs.t);
+
+            alert(parsed_qs.sa);
+            alert(parsed_qs.f);
+            alert(parsed_qs.n);
+            alert(parsed_qs.s);
+            alert(parsed_qs.z);
+            alert(parsed_qs.c);
+            alert(parsed_qs.a);
+            alert(parsed_qs.cu);
+            alert(parsed_qs.d);
+            alert(parsed_qs.r);
+            alert(parsed_qs.e);
+        }
+        if (typeof parsed_qs.e === "undefined") { alert("undef"); }
+        else {
+            //alert("OK");
+            var d2 = Date.now();
+            //alert(d2);
+            var x = new Date(parsed_qs.e);
+            //alert(x);
+            if (d2 > x) {
+                alert("Expired");
+            }
+        }
+
+        function loadContent() {
+            if (parsed_qs.t == 1) {
+                alert("Fill content");
+            }
+            // set content
+            document.getElementById("Salutation").innerHTML = decode_base64(parsed_qs.sa);
+            document.getElementById("FirstName").innerHTML = decode_base64(parsed_qs.f);
+            document.getElementById("Name").innerHTML = decode_base64(parsed_qs.n);
+            document.getElementById("Street").innerHTML = decode_base64(parsed_qs.s);
+            document.getElementById("ZIP").innerHTML = decode_base64(parsed_qs.z);
+            document.getElementById("City").innerHTML = decode_base64(parsed_qs.c);
+            document.getElementById("Amount").innerHTML = decode_base64(parsed_qs.a);
+            document.getElementById("Currency").innerHTML = decode_base64(parsed_qs.cu);
+            document.getElementById("Description").innerHTML = decode_base64(parsed_qs.d);
+            document.getElementById("Referrence").innerHTML = decode_base64(parsed_qs.r);
+            document.getElementById("Expires").innerHTML = decode_base64(parsed_qs.e);
+        }
+
+    </script>
+
+</head>
+<body onload="loadContent();">
+    Billero
+    <br />
+    <br />
+    <div id="Salutation"></div>
+    <div id="FirstName"></div>
+    <div id="Name"></div>
+    <div id="Street"></div>
+    <div id="ZIP"></div>
+    <div id="City"></div>
+    <div id="Amount"></div>
+    <div id="Currency"></div>
+    <div id="Description"></div>
+    <div id="Referrence"></div>
+    <div id="Expires"></div>
+
+</body>
+
+</html>
